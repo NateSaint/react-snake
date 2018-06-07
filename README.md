@@ -1,4 +1,4 @@
-#### Snake
+# Snake
 
 Implemented by: Nathen St. Germain
 
