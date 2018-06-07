@@ -1,0 +1,17 @@
+.SnakeGame {
+  text-align: center;
+}
+
+.header {
+  height: 40px;
+  padding: 20px;
+  color: Black;
+}
+
+.title {
+  font-size: 2em;
+  position: relative;
+  top: 50%;
+  transform: translateY(-100%);
+  text-align: center;
+}

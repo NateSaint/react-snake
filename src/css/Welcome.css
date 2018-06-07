@@ -1,0 +1,20 @@
+.welcome-background {
+  background: #D9D9D9;
+  display: inline-block;
+  width: 300px;
+  height: 200px;
+}
+
+.start-button {
+  background-color: #69a538;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 20px 55px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  position: relative;
+  top: 50%;
+}

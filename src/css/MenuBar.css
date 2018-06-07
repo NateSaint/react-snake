@@ -1,0 +1,29 @@
+.MenuBar {
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reset-button {
+  float: left;
+  background-color: #69a538;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  color: White;
+  position: relative;
+  top: 50%;
+  margin: 0 200px;
+}
+
+.score {
+  position: relative;
+  padding: 5px 10px;
+  float: right;
+  margin: 0 200px;
+}
