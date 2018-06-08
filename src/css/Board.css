@@ -1,5 +1,8 @@
 .board-background {
   background: #565656;
   display: inline-block;
-  border:1px solid black;
+  border: 1px solid black;
+  position: absolute;
+  margin-left:-300px;
+  left:50%;
 }

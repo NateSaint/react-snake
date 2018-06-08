@@ -1,0 +1,13 @@
+.food {
+  position: absolute;
+  background: #69a538;
+  height: 10px;
+  width: 10px;
+}
+
+.snake {
+  position: absolute;
+  background: #FFA500;
+  height: 10px;
+  width: 10px;
+}

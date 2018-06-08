@@ -3,4 +3,4 @@ import ReactDOM from 'react-dom';
 import './css/index.css';
 import { SnakeGame } from './SnakeGame';
 
-ReactDOM.render(<SnakeGame gameHeight={600} gameWidth={600}/>, document.getElementById('root'));
+ReactDOM.render(<SnakeGame gameHeight={600} gameWidth={600} gameTickDelay={100}/>, document.getElementById('root'));
