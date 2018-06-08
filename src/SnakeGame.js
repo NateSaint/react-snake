@@ -59,7 +59,7 @@ export class SnakeGame extends React.Component {
       } while (this.foodCollision());
     }
 
-    this.setState({ snake: snakeBlock, score: snakeBlock.length * 10 });
+    this.setState({ snake: snakeBlock, score: snakeBlock.length * 10 - 30 });
   }
 
   /**
