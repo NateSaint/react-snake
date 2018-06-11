@@ -33,7 +33,7 @@ export class SnakeGame extends React.Component {
    * Game loop - runs on each iteration of the timer
    */
   gameLoop() {
-    let snakeBlock = this.state.snake;
+    let snakeBlock = JSON.parse(JSON.stringify(this.state.snake));;
 
     // Update the snake
     let i;
@@ -43,23 +43,31 @@ export class SnakeGame extends React.Component {
 	  }
 
     // Update snake based on direction
-    switch (this.state.direction) {
-      case 'up': snakeBlock[0].y -= this.state.snakeSpeed; break;
-      case 'down': snakeBlock[0].y += this.state.snakeSpeed; break;
-      case 'left': snakeBlock[0].x -= this.state.snakeSpeed; break;
-      case 'right': snakeBlock[0].x += this.state.snakeSpeed; break;
+    let pDir, dir = this.state.direction;
+    switch (dir) {
+      case 'up': snakeBlock[0].y -= this.state.snakeSpeed; pDir = dir; break;
+      case 'down': snakeBlock[0].y += this.state.snakeSpeed; pDir = dir; break;
+      case 'left': snakeBlock[0].x -= this.state.snakeSpeed; pDir = dir; break;
+      case 'right': snakeBlock[0].x += this.state.snakeSpeed; pDir = dir; break;
       default: console.log("breaking"); break;
     }
 
     // Check if food collision/snake eating food
     if (this.foodCollision()) {
       snakeBlock.push({ x: this.state.foodX, y: this.state.foodY });
+      snakeBlock.push({ x: this.state.foodX, y: this.state.foodY });
+      snakeBlock.push({ x: this.state.foodX, y: this.state.foodY });
+      snakeBlock.push({ x: this.state.foodX, y: this.state.foodY });
       do {
         this.genRanFood();
       } while (this.foodCollision());
     }
 
-    this.setState({ snake: snakeBlock, score: snakeBlock.length * 10 - 30 });
+    if (this.snakeCollision(snakeBlock[0].x, snakeBlock[0].y)) {
+      clearInterval(this.state.intervalID);
+      this.setState({ gameOver: true });
+    } else
+      this.setState({ snake: snakeBlock, score: snakeBlock.length * 10 - 30, prevDirection: pDir });
   }
 
   /**
@@ -73,6 +81,28 @@ export class SnakeGame extends React.Component {
       }
     });
     return matched;
+  }
+
+  /**
+   * Determine game over collision
+   */
+  snakeCollision(x, y) {
+    if (x >= this.props.gameWidth || x < 0 || y >= this.props.gameHeight || y < 0 || this.isSnake(x, y))
+      return true;
+    else
+      return false;
+  }
+
+  /**
+   * Check if the coordinates contain a snake
+   */
+  isSnake(x, y) {
+    let ret = false;
+    this.state.snake.forEach(snakeBlock => {
+      if (x === snakeBlock.x && y === snakeBlock.y)
+        ret = true;
+    });
+    return ret;
   }
 
   /**
@@ -98,6 +128,8 @@ export class SnakeGame extends React.Component {
               {x: (this.props.gameWidth / 10) * 5, y: (this.props.gameHeight / 10) * 8},
               {x: (this.props.gameWidth / 10) * 5, y: (this.props.gameHeight / 10) * 8}],
       direction: 'up',
+      prevDirection: '',
+      gameOver: false,
       score: 0
     });
   }
@@ -121,10 +153,10 @@ export class SnakeGame extends React.Component {
    */
   keyPressHandler(event) {
     switch (event.keyCode) {
-      case 38: this.setState({ direction: 'up' }); break;
-      case 40: this.setState({ direction: 'down' }); break;
-      case 37: this.setState({ direction: 'left' }); break;
-      case 39: this.setState({ direction: 'right' }); break;
+      case 38: if (this.state.prevDirection !== 'down') this.setState({ direction: 'up' }); break;
+      case 40: if (this.state.prevDirection !== 'up') this.setState({ direction: 'down' }); break;
+      case 37: if (this.state.prevDirection !== 'right') this.setState({ direction: 'left' }); break;
+      case 39: if (this.state.prevDirection !== 'left') this.setState({ direction: 'right' }); break;
       default: this.setState({ direction: this.state.direction });
     }
   }
@@ -146,7 +178,7 @@ export class SnakeGame extends React.Component {
     return (
       <div className="SnakeGame">
         <header className="header">
-          <h1 className="title">Snake</h1>
+          <h1 className="title">{this.state.gameOver && this.state.gameStart ? "Game Over! Score: " + this.state.score : "Snake"}</h1>
         </header>
         {boardWelcome}
       </div>
