@@ -7,6 +7,7 @@ to use it for anything!
 
 ## To Run:
 ```
+    npm install
     npm install react-scripts
     npm start
 ```
